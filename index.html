@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Frota - Sistema</title>
+    <style>
+       * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+body {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                url('https://www.gov.br/ibama/pt-br/assuntos/noticias/2022/ibama-realiza-reuniao-para-definicao-do-pnapa-2023/ibama.jpeg/@@images/image');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h1 {
+    color: #4a701c;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.formulario-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.grupo-formulario {
+    margin-bottom: 15px;
+}
+
+.grupo-formulario label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: bold;
+}
+
+.grupo-formulario input,
+.grupo-formulario select,
+.grupo-formulario textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.opcoes-radio {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.opcoes-radio label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.grupo-checkbox {
+    margin: 10px 0;
+}
+
+.grupo-checkbox label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.botao {
+    background-color: #4a701c;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.botao:hover {
+    background-color: #4a701c;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    overflow-x: auto; /* Permite rolagem horizontal em dispositivos pequenos */
+    display: block;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    background-color: #4a701c;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.botao-acao {
+    background-color: #4caf50;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.botao-excluir {
+    background-color: #f44336;
+}
+
+/* Media Queries para telas pequenas (como celulares) */
+@media (max-width: 768px) {
+    .formulario-grid {
+        grid-template-columns: 1fr; /* Apenas uma coluna em telas pequenas */
+    }
+
+    .grupo-formulario input,
+    .grupo-formulario select,
+    .grupo-formulario textarea {
+        font-size: 16px; /* Aumentar a legibilidade dos campos */
+    }
+
+    .botao {
+        width: 100%; /* Botão ocupa toda a largura em telas pequenas */
+        padding: 12px 20px;
+    }
+
+    table {
+        overflow-x: auto;
+        display: block;
+        white-space: nowrap;
+    }
+
+    th, td {
+        font-size: 12px; /* Reduzir o tamanho da fonte na tabela */
+        padding: 8px;
+    }
+
+    h1 {
+        font-size: 24px; /* Ajustar o tamanho do título */
+    }
+}
+
+/* Media Queries para telas ainda menores (como smartphones em retrato) */
+@media (max-width: 480px) {
+    .grupo-formulario label {
+        font-size: 14px; /* Reduzir o tamanho das labels */
+    }
+
+    .grupo-formulario input,
+    .grupo-formulario select,
+    .grupo-formulario textarea {
+        font-size: 14px;
+    }
+
+    .botao {
+        font-size: 14px;
+    }
+
+    table {
+        font-size: 10px; /* Tamanho da fonte ainda menor para dispositivos muito pequenos */
+    }
+    h1 img {
+    height: 40px;
+    margin-right: 15px;
+    vertical-align: middle;
+}
+
+}
+
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        
+        <h1>
+            <img src="https://blog-static.infra.grancursosonline.com.br/wp-content/uploads/2013/10/ibama.png" alt="Logo" style="height: 40px; margin-right: 15px;">
+            Sistema de Controle de Frota</h1>
+        <form id="formularioVeiculo">
+            <div class="formulario-grid">
+                <div class="grupo-formulario">
+                    <label for="placa">Placa:</label>
+                    <input type="text" id="placa" required>
+                </div>
+
+                <div class="grupo-formulario">
+                    <label for="id">ID:</label>
+                    <input type="text" id="id" required>
+                </div>
+
+                <div class="grupo-formulario">
+                    <label for="tipo">Tipo:</label>
+                    <select id="tipo" required>
+                        <option value="F1">F1</option>
+                        <option value="F2">F2</option>
+                        <option value="F3">F3</option>
+                        <option value="M">M</option>
+                        <option value="P">P</option>
+                    </select>
+                </div>
+
+                <div class="grupo-formulario">
+                    <label for="recebimento">Data de Recebimento:</label>
+                    <input type="date" id="recebimento" required>
+                </div>
+            </div>
+
+            <h3>Documentação e Acessórios</h3>
+            <div class="formulario-grid">
+                <div class="grupo-checkbox">
+                    <label>
+                        <input type="checkbox" id="documentoOk"> Documento OK
+                    </label>
+                </div>
+
+                <div class="grupo-checkbox">
+                    <label>
+                        <input type="checkbox" id="trianguloOk"> Triângulo
+                    </label>
+                </div>
+
+                <div class="grupo-checkbox">
+                    <label>
+                        <input type="checkbox" id="macacoOk"> Macaco
+                    </label>
+                </div>
+
+                <div class="grupo-checkbox">
+                    <label>
+                        <input type="checkbox" id="chaveRodasOk"> Chave de Rodas
+                    </label>
+                </div>
+
+                <div class="grupo-checkbox">
+                    <label>
+                        <input type="checkbox" id="estepeOk"> Estepe
+                    </label>
+                </div>
+            </div>
+
+            <h3>Kit Desatolagem</h3>
+            <div class="formulario-grid">
+                <div class="grupo-checkbox">
+                    <label>
+                        <input type="checkbox" id="macacoHiOk"> Macaco Hi Lift
+                    </label>
+                </div>
+              
+                <div class="grupo-checkbox">
+                    <label>
+                        <input type="checkbox" id="pranchasOk"> 2 Pranchas
+                    </label>
+                </div>
+
+                <div class="grupo-checkbox">
+                    <label>
+                        <input type="checkbox" id="bolsaDesatOk"> Bolsa Desatolagem
+                    </label>
+                </div>
+            </div>
+            <div class="grupo-formulario">
+                <label>O carro está em uma missão?</label>
+                <div class="opcoes-radio">
+                    <label>
+                        <input type="radio" name="missao" value="Sim" required> Sim
+                    </label>
+                    <label>
+                        <input type="radio" name="missao" value="Não" required> Não
+                    </label>
+                </div>
+            </div>
+            
+            <div class="grupo-formulario">
+                <label for="localiza">Localização do carro:</label>
+                <div class="formulario-grid">
+                    <div class="grupo-formulario">
+                        <input type="text" id="localiza" placeholder="Digite a cidade" required>
+                    </div>
+                    <div class="grupo-formulario">
+                        <select id="estado" required>
+                            <option value="">Selecione o estado</option>
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espírito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraíba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantins</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="grupo-formulario">
+                <label for="observacoes">Observações:</label>
+                <textarea id="observacoes" name="observacoes" placeholder="Coloque aqui problemas do carro caso ele tenha (ex: precisa de revisão, vidro trincado, farol queimado, motor com falha etc.)"></textarea>
+            </div>
+            
+            <div class="grupo-formulario">
+                <label for="odometro">Odômetro:</label>
+                <input type="number" id="odometro">
+            </div>
+
+            <button type="submit" class="botao">Cadastrar Veículo</button>
+        </form>
+
+        <h2>Veículos Cadastrados</h2>
+        <table id="tabelaVeiculos">
+            <thead>
+                <tr>
+                    <th>Placa</th>
+                    <th>ID</th>
+                    <th>Tipo</th>
+                    <th>Recebimento</th>
+                    <th>Documento</th>
+                    <th>Acessórios</th>
+                    <th>Kit Desatolagem</th>
+                    <th>Missão</th>
+                    <th>Cidade</th>
+                    <th>Observações</th>
+                    <th>Odômetro</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+               <script src="index.js"></script>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
